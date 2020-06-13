@@ -39,6 +39,6 @@
   "secondaryTokenAttribute": "strain",
   "url": "https://github.com/profK/StarWarsFFG",
   "manifest": "https://raw.githubusercontent.com/profK/StarWarsFFG/profk/system.json",
-  "download": "https://github.com/profK/StarWarsFFG/releases/download/v.08/swffg-profk-0.8.zipmanifest",
+  "download": "https://github.com/profK/StarWarsFFG/releases/download/v.08/swffg-profk-0.8.zip",
   "license": "LICENSE.txt"
 }
