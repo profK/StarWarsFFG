@@ -20,7 +20,7 @@ export class ActorSheetFFG extends ActorSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["starwarsffg", "sheet", "actor"],
-      template: "systems/starwarsffg/templates/actors/ffg-character-sheet.html",
+      template: "systems/StarWarsFFG/templates/actors/ffg-character-sheet.html",
       width: 710,
       height: 650,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "characteristics" }],
@@ -30,7 +30,7 @@ export class ActorSheetFFG extends ActorSheet {
 
   /** @override */
   get template() {
-    const path = "systems/starwarsffg/templates/actors";
+    const path = "systems/StarWarsFFG/templates/actors";
     return `${path}/ffg-${this.actor.data.type}-sheet.html`;
   }
 
@@ -256,7 +256,7 @@ export class ActorSheetFFG extends ActorSheet {
   async _completeRoll(dicePool, description, skillName) {
     const id = randomID();
 
-    const content = await renderTemplate("systems/starwarsffg/templates/roll-options.html", {
+    const content = await renderTemplate("systems/StarWarsFFG/templates/roll-options.html", {
       dicePool,
       id,
     });

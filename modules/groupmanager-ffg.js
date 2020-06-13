@@ -38,7 +38,7 @@ export class GroupManager extends FormApplication {
       editable: game.user.isGM,
       width: 330,
       height: 650,
-      template: "systems/starwarsffg/templates/group-manager.html",
+      template: "systems/StarWarsFFG/templates/group-manager.html",
       id: "group-manager",
       title: "Group Manager",
     });
@@ -187,7 +187,7 @@ export class GroupManager extends FormApplication {
   async _grantXP(character) {
     const id = randomID();
     const description = game.i18n.localize("SWFFG.GrantXPTo") + ` ${character.name}...`;
-    const content = await renderTemplate("systems/starwarsffg/templates/grant-xp.html", {
+    const content = await renderTemplate("systems/StarWarsFFG/templates/grant-xp.html", {
       id,
     });
 
@@ -217,7 +217,7 @@ export class GroupManager extends FormApplication {
   async _bulkXP(characters) {
     const id = randomID();
     const description = game.i18n.localize("SWFFG.GrantXPToAllCharacters");
-    const content = await renderTemplate("systems/starwarsffg/templates/grant-xp.html", {
+    const content = await renderTemplate("systems/StarWarsFFG/templates/grant-xp.html", {
       id,
     });
 

@@ -9,7 +9,7 @@ export default class PopoutEditor extends FormApplication {
       id: "popout-editor",
       classes: ["starwarsffg", "sheet"],
       title: "Pop-out Editor",
-      template: "systems/starwarsffg/templates/popout-editor.html",
+      template: "systems/StarWarsFFG/templates/popout-editor.html",
       width: 320,
       height: 320
     });

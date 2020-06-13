@@ -17,7 +17,7 @@ export class ItemSheetFFG extends ItemSheet {
 
   /** @override */
   get template() {
-    const path = "systems/starwarsffg/templates/items";
+    const path = "systems/StarWarsFFG/templates/items";
     return `${path}/ffg-${this.item.data.type}-sheet.html`;
   }
 
