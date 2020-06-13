@@ -37,7 +37,7 @@
       {{!-- Primary Stats Container --}}
 
       <div class="container" style="flex-wrap: nowrap;">
-        <div class="container flex-group-center">
+        <div class="container flex-group-center"  >
           {{!-- Wounds Box --}}
           <div class="resource split">
             <div class="attribute flex-group-center">
@@ -47,7 +47,7 @@
                 </div>
                 <div class="block-attribute">
                   <div class="block-value"><input type="text" name="data.stats.wounds.max" value="{{data.stats.wounds.max}}" data-dtype="Number" /></div>
-                  <div class="block-value"><input type="text" name="data.stats.wounds.real_value" value="{{data.stats.wounds.real_value}}" data-dtype="Number" /></div>
+                  <div class="block-value"><input type="text" name="data.stats.wounds.value" value="{{data.stats.wounds.value}}" data-dtype="Number" /></div>
                 </div>
               </div>
               <div class="block-background-shadow">
@@ -70,7 +70,7 @@
                 </div>
                 <div class="block-attribute">
                   <div class="block-value"><input type="text" name="data.stats.strain.max" value="{{data.stats.strain.max}}" data-dtype="Number" /></div>
-                  <div class="block-value"><input type="text" name="data.stats.strain.real_value" value="{{data.stats.strain.real_value}}" data-dtype="Number" /></div>
+                  <div class="block-value"><input type="text" name="data.stats.strain.value" value="{{data.stats.strain.value}}" data-dtype="Number" /></div>
                 </div>
               </div>
               <div class="block-background-shadow">
@@ -92,7 +92,7 @@
                   {{localize "SWFFG.Soak"}}
                 </div>
                 <div class="block-attribute">
-                  <div class="block-value block-single"><input type="text" name="data.stats.soak.value" value="{{data.stats.soak.value}}" data-dtype="Number" disabled/></div>
+                  <div class="block-value block-single"><input type="text" name="data.stats.soak.value" value="{{data.stats.soak.value}}" data-dtype="Number" /></div>
                 </div>
               </div>
               <div class="block-background-shadow"></div>
@@ -122,7 +122,59 @@
             </div>
           </div>
 
-          
+          <div class="container flex-group-center">
+            <div class="resource split">
+              <div class="attribute flex-group-center">
+                <div class="block-background">
+                  <div class="block-title">
+                    Force Pool
+                  </div>
+                  <div class="block-attribute">
+                    <div class="block-value"><input type="text" name="data.stats.forcePool.value" value="{{data.stats.forcePool.value}}" data-dtype="Number"></div>
+                    <div class="block-value"><input type="text" name="data.stats.forcePool.max" value="{{data.stats.forcePool.max}}" data-dtype="Number"></div>
+                  </div>
+                </div>
+                <div class="block-background-shadow">
+                  <div class="shadow-left">
+                    <div class="shadow-text">Committed</div>
+                  </div>
+                  <div class="shadow-right">
+                    <div class="shadow-text">Available</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="resource single">
+              <div class="attribute flex-group-center">
+                <div class="block-background" >
+                  <div class="block-title" style="padding-left: 25px;  padding-right: 25px">
+                    Alignment
+                  </div>
+                  <div class="block-attribute">
+                    <div class="block-value block-single"><input type="text" name="data.stats.alignment.value" value="{{data.stats.alignment.value}}" data-dtype="Number"></div>
+                  </div>
+                </div>
+                <div class="block-background-shadow"></div>
+              </div>
+            </div>
+            {{!-- Story Point Box --}}
+            <div class="resource single">
+              <div class="attribute flex-group-center">
+                <div class="block-background">
+                  <div class="block-title"  style="white-space: nowrap; padding-left: 25px;  padding-right: 25px">
+                    Story Points
+                  </div>
+                  <div class="block-attribute">
+                    <div class="block-value block-single"><input type="text" name="data.stats.storypoints.value" value="{{data.stats.storypoints.value}}" data-dtype="Number"></div>
+                  </div>
+                </div>
+                <div class="block-background-shadow"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
         </div>
       </div>
     </div>
@@ -158,7 +210,20 @@
         </div>
         {{/each}}
       </div>
-      
+
+      <fieldset class="skillfilter" id="skillfilter">
+        <div>
+          <label>Filter skills:</label>
+          <input class="filter-control" type="radio" id="all" name="skillfilter" data-dtype="String" />
+          <label for="all">All</label>
+        </div>
+        <input class="filter-control" type="radio" id="Combat" name="skillfilter" data-dtype="String" />
+        <label for="combat">Combat</label><br />
+        <input class="filter-control" type="radio" id="General" name="skillfilter" data-dtype="String" />
+        <label for="general">General</label><br />
+        <input class="filter-control" type="radio" id="Knowledge" name="skillfilter" data-dtype="String" />
+        <label for="knowledge">Knowledge</label>
+      </fieldset>
       <div class="tableWithHeader">
         <div class="tableWithHeader-container">
           <table>
@@ -174,7 +239,7 @@
             <tbody>
               {{#each data.skills as |skill id|}} {{#iff skill.type '==' 'General'}}
               <tr data-ability="{{id}}" data-skilltype="{{skill.type}}" class="skill">
-                <td>{{skill.label}} {{#with (lookup ../this.FFG.characteristics [characteristic])~}} ({{localize abrev}}) {{/with}}</td>
+                <td>{{id}} {{#with (lookup ../this.data.characteristics [characteristic])~}} ({{abrev}}) {{/with}}</td>
                 <td>
                   <input class="careerskill-toggle" type="checkbox" name="data.skills.{{id}}.careerskill" data-dtype="Boolean" {{checked skill.careerskill}} />
                 </td>
@@ -191,6 +256,7 @@
           </table>
         </div>
         <div class="tableWithHeader-container">
+
           <table>
             <thead>
               <th>{{localize "SWFFG.SkillsCombat"}}</th>
@@ -204,7 +270,7 @@
             <tbody>
               {{#each data.skills as |skill id|}} {{#iff skill.type '==' 'Combat'}}
               <tr data-ability="{{id}}" data-skilltype="{{skill.type}}" class="skill">
-                <td>{{skill.label}} {{#with (lookup ../this.FFG.characteristics [characteristic])~}} ({{localize abrev}}) {{/with}}</td>
+                <td>{{id}} {{#with (lookup ../this.data.characteristics [characteristic])~}} ({{abrev}}) {{/with}}</td>
                 <td>
                   <input class="careerskill-toggle" type="checkbox" name="data.skills.{{id}}.careerskill" data-dtype="Boolean" {{checked skill.careerskill}} />
                 </td>
@@ -232,7 +298,7 @@
             <tbody>
               {{#each data.skills as |skill id|}} {{#iff skill.type '==' 'Knowledge'}}
               <tr data-ability="{{id}}" data-skilltype="{{skill.type}}" class="skill">
-                <td>{{localize (lookup ../this.FFG.skills_knowledgestripped [id])}} {{#with (lookup ../this.FFG.characteristics [characteristic])~}} ({{localize abrev}}) {{/with}}</td>
+                <td>{{lookup ../this.FFG.skills.knowledgestripped [id]~}} {{#with (lookup ../this.data.characteristics [characteristic])~}} ({{abrev}}) {{/with}}</td>
                 <td>
                   <input class="careerskill-toggle" type="checkbox" name="data.skills.{{id}}.careerskill" data-dtype="Boolean" {{checked skill.careerskill}} />
                 </td>
@@ -262,8 +328,8 @@
                 {{localize "SWFFG.Encumbrance"}}
               </div>
               <div class="block-attribute">
-                <div class="block-value"><input type="text" name="data.stats.encumbrance.value" value="{{data.stats.encumbrance.value}}" data-dtype="Number" disabled /></div>
-                <div class="block-value"><input type="text" name="data.stats.encumbrance.max" value="{{data.stats.encumbrance.max}}" data-dtype="Number" /></div>
+                <div class="block-value"><input type="text" name="data.stats.encumbrance.max" value="{{data.stats.encumbrance.value}}" data-dtype="Number" disabled /></div>
+                <div class="block-value"><input type="text" name="data.stats.encumbrance.value" value="{{data.stats.encumbrance.max}}" data-dtype="Number" /></div>
               </div>
             </div>
             <div class="block-background-shadow">
@@ -309,12 +375,12 @@
           {{#each actor.items as |item id|}} {{#iff item.type '==' 'weapon'}}
           <tr class="item" data-item-id="{{item._id}}">
             <td class="item-name">{{item.name}}</td>
-            <td>{{localize (lookup ../this.FFG.combat_skills_abrev item.data.skill.value)}}</td>
+            <td>{{lookup ../this.FFG.combat_skills.abrev item.data.skill.value}}</td>
             <td>{{item.data.damage.value}}</td>
-            <td>{{localize item.data.range.label}}</td>
+            <td>{{item.data.range.value}}</td>
             <td>{{item.data.crit.value}}</td>
             <td>{{item.data.encumbrance.value}}</td>
-            <td>{{{renderDiceTags item.data.special.value}}}</td>
+            <td>{{item.data.special.value}}</td>
             <td class="item-controls">
               <!-- <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a> -->
               <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
@@ -384,38 +450,8 @@
     </div>
 
     {{!-- Talents Tab --}}
-
-    <div class="tab talents items" data-group="primary" data-tab="talents">
+    <div class="tab talents" data-group="primary" data-tab="talents">
       {{!-- Talents List --}}
-
-      
-
-      
-      <div class="container flex-group-center item-values">
-        {{!-- Force Box --}}
-        <div class="resource split">
-          <div class="attribute flex-group-center">
-            <div class="block-background">
-              <div class="block-title">
-                {{localize "SWFFG.ForcePool"}}
-              </div>
-              <div class="block-attribute">
-                <div class="block-value"><input type="text" name="data.stats.forcePool.value" value="{{data.stats.forcePool.value}}" data-dtype="Number" disabled /></div>
-                <div class="block-value"><input type="text" name="data.stats.forcePool.max" value="{{data.stats.forcePool.max}}" data-dtype="Number" /></div>
-              </div>
-            </div>
-            <div class="block-background-shadow">
-              <div class="shadow-left">
-                <div class="shadow-text">{{localize "SWFFG.ForcePoolCommitted"}}</div>
-              </div>
-              <div class="shadow-right">
-                <div class="shadow-text">{{localize "SWFFG.ForcePoolAvailable"}}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <table class="talent-list">
         <thead>
           <tr>
@@ -432,51 +468,9 @@
               {{item.name}}
               <div class="tooltip">{{item.safe_desc}}</div>
             </td>
-            <td>{{localize item.data.activation.label}}</td>
+            <td>{{item.data.activation.value}}</td>
             <td>
               {{#if item.data.ranks.ranked}} {{item.data.ranks.current}} {{else}} N/A {{/if}}
-            </td>
-            <td>
-              <div class="item-controls">
-                <!-- <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a> -->
-                <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
-              </div>
-            </td>
-          </tr>
-          {{/iff}} {{/each}}
-        </tbody>
-      </table>
-      {{!-- Force Powers List --}}
-      <table class="talent-list">
-        <thead>
-          <tr>
-            <th>{{localize "SWFFG.ForcePower"}}</th>
-            <th>{{localize "SWFFG.ForcePowerUpgrades"}}</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each actor.items as |item id|}} {{#iff item.type '==' 'forcepower'}}
-          <tr class="item" data-item-id="{{item._id}}">
-            <td class="item-name hover">
-              {{item.name}}
-              <div class="tooltip">{{item.safe_desc}}</div>
-            </td>
-            <td>
-              <table>
-                <thead>
-                  <th>{{localize "SWFFG.SkillsName"}}</th>
-                  <th>{{localize "SWFFG.SkillsRank"}}</th>
-                </thead>
-                <tbody>
-                  {{#each item.powerUpgrades as |upgrade name|}}
-                  <tr>
-                    <td>{{upgrade.name}}</td>
-                    <td>{{upgrade.rank}}</td>
-                  </tr>
-                {{/each}}
-                </tbody>
-              </table>
             </td>
             <td>
               <div class="item-controls">
@@ -497,35 +491,7 @@
       </div>
 
       <div class="container flex-group-center biography-values">
-        <div class="injuries">
-          <div class="resource full">
-            <div class="attribute flex-group-center">
-              <div class="block-background">
-                <div class="block-header">
-                  <div>{{localize "SWFFG.CriticalInjuries"}}</div>
-                  <div class="grid grid-2col">
-                    <div>{{localize "SWFFG.Result"}}</div>
-                    <div>{{localize "SWFFG.Severity"}}</div>
-                  </div>
-                </div>
-                <div class="block-attribute">
-                  {{#each actor.items as |item id|}} {{#iff item.type '==' 'criticalinjury'}}
-                  <div class="grid grid-2col item" data-item-id="{{item._id}}">
-                    <div>{{item.name}}</div>
-                    <div class="severity">
-                      {{renderMultiple  item.data.severity "<img class='severity-img' src='/modules/special-dice-roller/public/images/sw/purple.png'>"}}
-                      <div class="item-controls">
-                        <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
-                      </div>
-                    </div>
-                  </div>
-                  {{/iff}} {{/each}}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-  {{!-- Experience Box --}}
+        {{!-- Experience Box --}}
         <div class="resource split">
           <div class="attribute flex-group-center">
             <div class="block-background">
@@ -547,8 +513,6 @@
             </div>
           </div>
         </div>
-        <div class="grid grid-2col">
-        
 
         {{!-- Obligation Box --}}
         <div class="resource single">
@@ -580,6 +544,7 @@
           </div>
         </div>
 
+        <!-- removed for my variant system
         {{!-- Morality Box --}}
         <div class="resource single">
           <div class="attribute flex-group-center">
@@ -593,9 +558,9 @@
             </div>
             <div class="block-background-shadow"></div>
           </div>
-        </div>
+        </div> -->
 
-        {{!-- Conflict Box --}}
+        {{!-- Duty Box --}}
         <div class="resource single">
           <div class="attribute flex-group-center">
             <div class="block-background">
@@ -609,22 +574,16 @@
             <div class="block-background-shadow"></div>
           </div>
         </div>
-        </div>
-
-        
       </div>
     </div>
-
-    
-    
 
     {{!-- Modifiers Tab --}}
     <div class="tab attributes" data-group="primary" data-tab="attributes">
       <header class="attributes-header flexrow">
         <!-- <span class="attribute-key">ID</span> -->
-        <span class="attribute-modtype">{{localize "SWFFG.ModifierType"}}</span>
-        <span class="attribute-mod">{{localize "SWFFG.Modifier"}}</span>
-        <span class="attribute-value">{{localize "SWFFG.ModifierValue"}}</span>
+        <span class="attribute-modtype">Mod Type</span>
+        <span class="attribute-mod">Modifier</span>
+        <span class="attribute-value">Value</span>
         <a class="attribute-control" data-action="create"><i class="fas fa-plus"></i></a>
       </header>
 
@@ -634,18 +593,18 @@
           <input class="attribute-key" type="text" name="data.attributes.{{key}}.key" value="{{key}}" style="display: none;" data-dtype="String" />
           <select class="attribute-modtype" name="data.attributes.{{key}}.modtype">
             {{#select attr.modtype}} {{#each ../this.FFG.mod_types as |t|}}
-            <option value="{{t.value}}">{{localize t.label}}</option>
+            <option value="{{t}}">{{t}}</option>
             {{/each}} {{/select}}
           </select>
           <select class="attribute-mod" name="data.attributes.{{key}}.mod">
             {{#select attr.mod}} {{#iff attr.modtype '==' 'Stat' }} {{#each ../this.FFG.character_stats as |t|}}
-            <option value="{{t.value}}">{{localize t.label}}</option>
+            <option value="{{t}}">{{t}}</option>
             {{/each}} {{/iff}} {{#iff attr.modtype '==' 'Skill Rank' }} {{#each ../this.FFG.skills as |t|}}
-            <option value="{{t.value}}">{{localize t.label}}</option>
+            <option value="{{t}}">{{t}}</option>
             {{/each}} {{/iff}} {{#iff attr.modtype '==' 'Skill Boost' }} {{#each ../this.FFG.skills as |t|}}
-            <option value="{{t.value}}">{{localize t.label}}</option>
+            <option value="{{t}}">{{t}}</option>
             {{/each}} {{/iff}} {{#iff attr.modtype '==' 'Characteristic' }} {{#each ../this.FFG.characteristics as |t|}}
-            <option value="{{t.value}}">{{localize t.label}}</option>
+            <option value="{{t}}">{{t}}</option>
             {{/each}} {{/iff}} {{/select}}
           </select>
           <input class="attribute-value" type="text" name="data.attributes.{{key}}.value" value="{{attr.value}}" data-dtype="Number" placeholder="0" />
